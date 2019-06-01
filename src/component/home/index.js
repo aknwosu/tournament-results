@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { fetchStuff } from '../../apiCall'
+import Tournament from '../Tournament'
+
 class HomePage extends Component {
   constructor(props){
     super(props)
     this.state = {
-      tournaments: []
+      tournaments: [],
+      activeTournament: {}
     }
   }
   async componentDidMount() {
@@ -17,9 +20,7 @@ class HomePage extends Component {
     return (
       <div>
         <div>Hello Feefee</div>
-        {tournaments && tournaments.map(tournament => (
-          <div key={tournament.id}>{tournament.name}</div>
-        ))}
+        {!!tournaments.length && <Tournament tournaments={tournaments} /> }
       </div>
     )
   }
