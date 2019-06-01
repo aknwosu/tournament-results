@@ -13,7 +13,6 @@ class Tournament extends Component {
     }
   }
   onTournamentSelect = selectedTournament => {
-    // console.log("tournament ====", selectedTournament)
     this.setState({ selectedTournament })
   }
   onSearch = () => {
@@ -29,9 +28,15 @@ class Tournament extends Component {
   onSearchTextChange = ({target: {value}}) => {
     this.setState({ searchText: value }, () => this.onSearch())
   }
+
+  onDateSelect = selected => {
+    const { tournaments } = this.state
+    const selectedTournament = tournaments.filter((tournament) => tournament.id === selected)
+    this.setState({ displayedTournaments: selectedTournament})
+  }
   render() {
     console.log(this.props, this.state)
-    const { tournaments, searchText, displayedTournaments } = this.state
+    const { searchText, displayedTournaments } = this.state
     return (
       <div>
         <ListView
@@ -39,12 +44,8 @@ class Tournament extends Component {
           onTournamentSelect={this.onTournamentSelect}
           onSearchTextChange={this.onSearchTextChange}
           searchText={searchText}
+          onDateSelect={this.onDateSelect}
         />
-        {/* {console.log(tournaments)}
-        Tourny
-        {tournaments.map(tournament => (
-          <div key={tournament.id}>{tournament.name}</div>
-        ))} */}
       </div>
     )
   }

@@ -16,7 +16,6 @@ class HomePage extends Component {
   }
   render() {
     const { tournaments } = this.state
-    console.log("tournaments===========", tournaments)
     return (
       <div>
         <div>Hello Feefee</div>

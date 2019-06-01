@@ -33,8 +33,12 @@ class Filters extends Component {
     })
     this.setState({ startDates, endDates })
   }
-  handleChange = ({target: {value}}) => {
-    this.setState({ filterValue: value });
+  handleChange = ({ target: { value } }) => {
+    this.setState({ filterValue: value })
+  }
+  handleFilter = ({ target: { value } }) => {
+    const { onDateSelect } = this.props
+    if (value) onDateSelect(value)
   }
   renderFilterByDate = () => {
     const { filterValue, startDates, endDates } = this.state
@@ -42,8 +46,8 @@ class Filters extends Component {
     filterValue === "startDate" ? filters = startDates : filters = endDates
     return (
       <select value={this.state.value} onChange={this.handleFilter}>
-        {filters.map(filter => <option value={filter.value}>{filter.name}</option>)}
-        <option value="">Select a filter</option>
+        <option value="">Select a date</option>
+        {filters.map(filter => <option key={filter.value} value={filter.value}>{filter.name}</option>)}
       </select>
 
     )
