@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ListView from './ListView'
 import TournamentDetails from './Details'
+import Modal from '../Modal'
+import './styles.css'
 
 class Tournament extends Component {
   constructor(props) {
@@ -29,7 +31,13 @@ class Tournament extends Component {
   onSearchTextChange = ({target: {value}}) => {
     this.setState({ searchText: value }, () => this.onSearch())
   }
-
+  setActiveFilter = activeFilter => {
+    this.setState({ activeFilter, selectedTournament: {} }, () => {
+      if (!activeFilter) {
+        this.setState({ displayedTournaments: this.state.tournaments })
+      }
+    })
+  }
   onFilterSelect = (selected, appliedFilter) => {
     const { tournaments } = this.state
     let selectedTournament = []
@@ -38,21 +46,43 @@ class Tournament extends Component {
     } else {
       selectedTournament = tournaments.filter((tournament) => tournament.id == selected)
     }
-    this.setState({ displayedTournaments: selectedTournament})
+    this.setState({ displayedTournaments: selectedTournament, selectedTournament: {}})
+  }
+  handleModalClose = () => {
+    this.setState({ selectedTournament: {}})
+  }
+  renderMobileView = () => {
+    const { selectedTournament } = this.state
+    if (selectedTournament.id) {
+      return (
+        <Modal handleClose={this.handleModalClose}>
+          <TournamentDetails
+            selectedTournament={selectedTournament}
+          />
+        </Modal>
+      )
+    }
+  }
+  renderEmptyView = () => {
+    return <div>When you select a tournament, it will appear here...</div>
   }
   render() {
-    console.log(this.props, this.state)
     const { searchText, displayedTournaments, selectedTournament } = this.state
+    const { isMobileView } = this.props
     return (
-      <div>
+      <div className="tournaments">
         <ListView
           tournaments={displayedTournaments}
           onTournamentSelect={this.onTournamentSelect}
           onSearchTextChange={this.onSearchTextChange}
           searchText={searchText}
           onFilterSelect={this.onFilterSelect}
+          setActiveFilter={this.setActiveFilter}
+          selectedTournament={selectedTournament}
         />
-        {!!Object.keys(selectedTournament).length &&<TournamentDetails selectedTournament={selectedTournament} />}
+        {!!Object.keys(selectedTournament).length && isMobileView && this.renderMobileView()}
+        {!isMobileView && !!Object.keys(selectedTournament).length && <TournamentDetails selectedTournament={selectedTournament} />}
+        {!isMobileView && !Object.keys(selectedTournament).length && this.renderEmptyView()}
       </div>
     )
   }

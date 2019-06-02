@@ -5,7 +5,6 @@ export const fetchStuff = async () => {
     return data.files['tournaments.json'].content
 
   } catch (error) {
-    console.log(error)
     throw new Error('Something went wrong on api server!');
 
   }
