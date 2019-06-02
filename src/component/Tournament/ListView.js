@@ -3,7 +3,7 @@ import Filters from './Filters'
 
 export const ListView = (props) => {
   const {
-    tournaments, onTournamentSelect, onSearchTextChange, searchText, onDateSelect
+    tournaments, onTournamentSelect, onSearchTextChange, searchText, onFilterSelect
   } = props
   return(
     <div>
@@ -11,7 +11,7 @@ export const ListView = (props) => {
         tournaments={tournaments}
         onSearchTextChange={onSearchTextChange}
         searchText={searchText}
-        onDateSelect={onDateSelect}
+        onFilterSelect={onFilterSelect}
       />
       {tournaments.map(tournament => (
         <div

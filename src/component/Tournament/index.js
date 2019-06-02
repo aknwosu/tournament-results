@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ListView from './ListView'
+import TournamentDetails from './Details'
 
 class Tournament extends Component {
   constructor(props) {
@@ -29,14 +30,19 @@ class Tournament extends Component {
     this.setState({ searchText: value }, () => this.onSearch())
   }
 
-  onDateSelect = selected => {
+  onFilterSelect = (selected, appliedFilter) => {
     const { tournaments } = this.state
-    const selectedTournament = tournaments.filter((tournament) => tournament.id === selected)
+    let selectedTournament = []
+    if (appliedFilter === "series") {
+      selectedTournament = tournaments.filter((tournament) => tournament.series.id == selected)
+    } else {
+      selectedTournament = tournaments.filter((tournament) => tournament.id == selected)
+    }
     this.setState({ displayedTournaments: selectedTournament})
   }
   render() {
     console.log(this.props, this.state)
-    const { searchText, displayedTournaments } = this.state
+    const { searchText, displayedTournaments, selectedTournament } = this.state
     return (
       <div>
         <ListView
@@ -44,8 +50,9 @@ class Tournament extends Component {
           onTournamentSelect={this.onTournamentSelect}
           onSearchTextChange={this.onSearchTextChange}
           searchText={searchText}
-          onDateSelect={this.onDateSelect}
+          onFilterSelect={this.onFilterSelect}
         />
+        {!!Object.keys(selectedTournament).length &&<TournamentDetails selectedTournament={selectedTournament} />}
       </div>
     )
   }
