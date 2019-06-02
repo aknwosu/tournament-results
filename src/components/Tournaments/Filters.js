@@ -31,7 +31,6 @@ class Filters extends Component {
       name: new Date(tournament.date_end.split(" ")[0]).toDateString()
       })
       if (!series.length || !this.seriesExists(series, tournament)) {
-        console.log( tournament.series)
         series.push({
           value: tournament.series.id,
           name: tournament.series.name
@@ -71,9 +70,9 @@ class Filters extends Component {
     const { filterValue } = this.state
     const { onSearchTextChange, searchText} = this.props
     return (
-      <div>
+      <div className="tournaments-filter">
         <div>
-          <select value={this.state.value} onChange={this.handleChange}>
+          <select value={this.state.value} onChange={this.handleChange} >
             <option value="">Select a filter</option>
             <option value="startDates">Filter by start date</option>
             <option value="endDates">Filter by end date</option>
@@ -82,7 +81,7 @@ class Filters extends Component {
           {filterValue && this.renderFilterSelect()}
         </div>
         <input
-          autoFocus
+          placeholder="Search..."
           name="search"
           value={searchText}
           onChange={onSearchTextChange}

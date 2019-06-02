@@ -1,25 +1,32 @@
 import React, { Component } from 'react'
 import { fetchStuff } from '../../apiCall'
-import Tournament from '../Tournament'
-
+import Tournaments from '../Tournaments'
+import './styles.css'
 class HomePage extends Component {
   constructor(props){
     super(props)
     this.state = {
       tournaments: [],
-      activeTournament: {}
+      activeTournament: {},
     }
   }
   async componentDidMount() {
     const tournaments = await fetchStuff()
     this.setState({ tournaments: JSON.parse(tournaments)})
   }
+
   render() {
     const { tournaments } = this.state
+    const { isMobileView } = this.props
     return (
-      <div>
-        <div>Hello Feefee</div>
-        {!!tournaments.length && <Tournament tournaments={tournaments} /> }
+      <div className="container">
+        <div className="title">Tournaments Results</div>
+        {!!tournaments.length && (
+          <Tournaments
+            tournaments={tournaments}
+            isMobileView={isMobileView}
+          />
+        )}
       </div>
     )
   }

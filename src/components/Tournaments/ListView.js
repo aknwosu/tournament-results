@@ -1,12 +1,13 @@
 import React from 'react'
 import Filters from './Filters'
+import './styles.css'
 
 export const ListView = props => {
   const {
-    tournaments, onTournamentSelect, onSearchTextChange, searchText, onFilterSelect, setActiveFilter
+    tournaments, onTournamentSelect, onSearchTextChange, searchText, onFilterSelect, setActiveFilter, selectedTournament
   } = props
   return(
-    <div>
+    <div className="tournaments-list">
       <Filters
         tournaments={tournaments}
         onSearchTextChange={onSearchTextChange}
@@ -15,7 +16,7 @@ export const ListView = props => {
         setActiveFilter={setActiveFilter}
       />
       {tournaments.map(tournament => (
-        <div
+        <div className={`tournament ${tournament.id == selectedTournament.id ? "isActive" : ""}`}
           key={tournament.id}
           onClick={() => onTournamentSelect(tournament)}
         >
