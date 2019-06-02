@@ -29,7 +29,13 @@ class Tournament extends Component {
   onSearchTextChange = ({target: {value}}) => {
     this.setState({ searchText: value }, () => this.onSearch())
   }
-
+  setActiveFilter = activeFilter => {
+    this.setState({ activeFilter }, () => {
+      if (!activeFilter) {
+        this.setState({ displayedTournaments: this.state.tournaments })
+      }
+    })
+  }
   onFilterSelect = (selected, appliedFilter) => {
     const { tournaments } = this.state
     let selectedTournament = []
@@ -51,6 +57,7 @@ class Tournament extends Component {
           onSearchTextChange={this.onSearchTextChange}
           searchText={searchText}
           onFilterSelect={this.onFilterSelect}
+          setActiveFilter={this.setActiveFilter}
         />
         {!!Object.keys(selectedTournament).length &&<TournamentDetails selectedTournament={selectedTournament} />}
       </div>

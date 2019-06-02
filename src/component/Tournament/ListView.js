@@ -1,9 +1,9 @@
 import React from 'react'
 import Filters from './Filters'
 
-export const ListView = (props) => {
+export const ListView = props => {
   const {
-    tournaments, onTournamentSelect, onSearchTextChange, searchText, onFilterSelect
+    tournaments, onTournamentSelect, onSearchTextChange, searchText, onFilterSelect, setActiveFilter
   } = props
   return(
     <div>
@@ -12,6 +12,7 @@ export const ListView = (props) => {
         onSearchTextChange={onSearchTextChange}
         searchText={searchText}
         onFilterSelect={onFilterSelect}
+        setActiveFilter={setActiveFilter}
       />
       {tournaments.map(tournament => (
         <div

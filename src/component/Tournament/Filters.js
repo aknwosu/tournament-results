@@ -47,6 +47,7 @@ class Filters extends Component {
   }
 
   handleChange = ({ target: { value } }) => {
+    this.props.setActiveFilter(value)
     this.setState({ filterValue: value })
   }
   handleFilter = ({ target: { value } }) => {
@@ -54,7 +55,7 @@ class Filters extends Component {
     if (value) onFilterSelect(value, this.state.filterValue)
   }
   renderFilterSelect = () => {
-    const { filterValue, startDates, endDates } = this.state
+    const { filterValue } = this.state
     let filters = []
     filters = this.state[filterValue]
     return (
@@ -67,7 +68,6 @@ class Filters extends Component {
   }
 
   render() {
-    console.log("=====state=====", this.state)
     const { filterValue } = this.state
     const { onSearchTextChange, searchText} = this.props
     return (
