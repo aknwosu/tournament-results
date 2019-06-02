@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import HomePage from './components/home'
+import HomePage from './home'
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
